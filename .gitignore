@@ -73,3 +73,8 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+UdemyEscape/Build/
+UdemyEscape/Binaries/
+UdemyEscape/Intermediate/
+UdemyEscape/Saved/
+UdemyEscape/Content/StarterContent/
