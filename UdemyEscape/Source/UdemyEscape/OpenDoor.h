@@ -24,6 +24,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void OpenTheDoor();
 
 private:
 	//Visible but not editable
@@ -33,4 +34,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* pressurePlate;
 	
+	UPROPERTY(EditAnywhere)
+	AActor* actorThatOpens;
 };
