@@ -21,8 +21,8 @@ void UPositionReport::BeginPlay()
 
 	// ...
 	FString objectName = GetOwner()->GetName();
-
-	UE_LOG(LogTemp, Warning, TEXT("Position report for %s"), *objectName);
+	FString objectPos = GetOwner()->GetTransform().GetLocation().ToString();
+	UE_LOG(LogTemp, Warning, TEXT("%s is at %s"), *objectName, *objectPos);
 }
 
 
