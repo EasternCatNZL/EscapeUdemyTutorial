@@ -2,6 +2,7 @@
 
 #include "Grabber.h"
 #include "DrawDebugHelpers.h"
+#include "Runtime/Engine/Public/WorldCollision.h"
 
 #define OUT
 
@@ -47,6 +48,16 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	//ray cast forward reach distance
 	DrawDebugLine(GetWorld(), playerViewPointLocation, lineTraceEnd, FColor(255, 0, 0), false, 0.0f, 0.0f, 10.0f);
 
+	//set up query params
+	FCollisionQueryParams traceParameters(FName(TEXT("")), false, GetOwner());
+
+	FHitResult lineHit;
+	GetWorld()->LineTraceSingleByObjectType(OUT lineHit, playerViewPointLocation, lineTraceEnd, FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), traceParameters);
 	//see what is hit
+	AActor* actorHit = lineHit.GetActor();
+	
+	if (actorHit) {
+		UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s"), *(actorHit->GetName()));
+	}
 }
 
