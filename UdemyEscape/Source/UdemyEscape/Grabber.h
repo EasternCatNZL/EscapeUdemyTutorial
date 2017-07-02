@@ -30,6 +30,12 @@ public:
 private:
 	//ray cast and grab what is in reach
 	void Grab();
+	//called when grab is released
+	void Release();
+
+	void FindPhysicsHandleComponent();
+	void FindInputComponent();
+	const FHitResult GetFirstPhysicsBodyInReach();
 
 private:
 	//UPROPERTY(EditAnywhere)
