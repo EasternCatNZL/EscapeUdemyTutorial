@@ -36,6 +36,8 @@ private:
 	void FindPhysicsHandleComponent();
 	void FindInputComponent();
 	const FHitResult GetFirstPhysicsBodyInReach();
+	FVector GetReachLineStart();
+	FVector GetReachLineEnd();
 
 private:
 	//UPROPERTY(EditAnywhere)
@@ -43,4 +45,5 @@ private:
 		
 	UPhysicsHandleComponent* physicsHandle = nullptr;
 	UInputComponent* inputComponent = nullptr;
+	FVector lineTraceEnd;
 };
