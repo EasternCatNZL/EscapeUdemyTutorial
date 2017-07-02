@@ -51,8 +51,6 @@ void UGrabber::FindInputComponent() {
 
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
-;
-
 	//set up query params
 	FCollisionQueryParams traceParameters(FName(TEXT("")), false, GetOwner());
 
@@ -91,6 +89,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!physicsHandle) { return; }
+
 	//if physics handle attached, move object we're holding
 	if (physicsHandle->GrabbedComponent) {
 		//move object we're holding
@@ -107,6 +107,8 @@ void UGrabber::Grab()
 	auto componentToGrab = hitResult.GetComponent();
 	auto actorHit = hitResult.GetActor();
 
+	if (!physicsHandle) { return; }
+
 	if (actorHit) {
 		physicsHandle->GrabComponentAtLocation(componentToGrab, NAME_None, componentToGrab->GetOwner()->GetActorLocation());
 	}
@@ -114,6 +116,8 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
+	if (!physicsHandle) { return; }
+
 	//if holding something, release handle
 	physicsHandle->ReleaseComponent();
 }

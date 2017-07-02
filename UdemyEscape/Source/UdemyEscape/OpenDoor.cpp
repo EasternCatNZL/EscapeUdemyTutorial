@@ -52,11 +52,19 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 void UOpenDoor::OpenTheDoor()
 {
 	//set the door rotation
+	if (!owner) {
+		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
+		return;
+	}
 	owner->SetActorRotation(FRotator(0.0f, openAngle, 0.0f));
 }
 
 void UOpenDoor::CloseTheDoor() {
 	//set the door rotation
+	if (!owner) {
+		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
+		return;
+	}
 	owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
 }
 
@@ -65,6 +73,11 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate() {
 
 	//find overlapping actors, interate through and add masses
 	TArray<AActor*> overlappingActors;
+	if (!pressurePlate) {
+		UE_LOG(LogTemp, Warning, TEXT("Pressure plate not set"));
+		return totalMass;
+	}
+
 	pressurePlate->GetOverlappingActors(OUT overlappingActors);
 	for (const auto* i : overlappingActors) {
 		totalMass += i->FindComponentByClass<UPrimitiveComponent>()->GetMass();
