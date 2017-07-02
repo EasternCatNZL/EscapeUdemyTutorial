@@ -83,8 +83,22 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	// ...
 
-	//if physics handle attached, move object we're holding
+	//get view point
+	FVector playerViewPointLocation;
+	FRotator playerViewPointRotation;
+	//sets viewpoint location and viewpwoint rotation
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT playerViewPointLocation, OUT playerViewPointRotation);
 
+	FVector lineTraceEnd = playerViewPointLocation + playerViewPointRotation.Vector() * reach;
+
+	//if physics handle attached, move object we're holding
+	if (physicsHandle->GrabbedComponent) {
+		//move object we're holding
+		physicsHandle->SetTargetLocation(lineTraceEnd);
+		
+	}
+
+	
 	
 }
 
@@ -93,8 +107,13 @@ void UGrabber::Grab()
 	UE_LOG(LogTemp, Warning, TEXT("Grab pressed"));
 
 	//try and reach any actors with physics body collision
-	GetFirstPhysicsBodyInReach();
-	//if hit, attach physics handle
+	auto hitResult = GetFirstPhysicsBodyInReach();
+	auto componentToGrab = hitResult.GetComponent();
+	auto actorHit = hitResult.GetActor();
+
+	if (actorHit) {
+		physicsHandle->GrabComponentAtLocation(componentToGrab, NAME_None, componentToGrab->GetOwner()->GetActorLocation());
+	}
 }
 
 void UGrabber::Release()
@@ -102,5 +121,6 @@ void UGrabber::Release()
 	UE_LOG(LogTemp, Warning, TEXT("Grab released"));
 
 	//if holding something, release handle
+	physicsHandle->ReleaseComponent();
 }
 
