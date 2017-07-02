@@ -7,6 +7,7 @@
 #include "Runtime/Engine/Classes/Engine/TriggerVolume.h"
 #include "OpenDoor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UDEMYESCAPE_API UOpenDoor : public UActorComponent
@@ -27,6 +28,8 @@ public:
 	void OpenTheDoor();
 	void CloseTheDoor();
 	
+	UPROPERTY(BlueprintAssignable)
+	FOnOpenRequest onOpenRequest;
 
 private:
 	float GetTotalMassOfActorsOnPlate();

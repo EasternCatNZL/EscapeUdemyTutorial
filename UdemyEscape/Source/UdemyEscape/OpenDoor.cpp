@@ -56,7 +56,8 @@ void UOpenDoor::OpenTheDoor()
 		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
 		return;
 	}
-	owner->SetActorRotation(FRotator(0.0f, openAngle, 0.0f));
+	onOpenRequest.Broadcast();
+	//owner->SetActorRotation(FRotator(0.0f, openAngle, 0.0f));
 }
 
 void UOpenDoor::CloseTheDoor() {
@@ -65,7 +66,7 @@ void UOpenDoor::CloseTheDoor() {
 		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
 		return;
 	}
-	owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
+	//owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
 }
 
 float UOpenDoor::GetTotalMassOfActorsOnPlate() {
