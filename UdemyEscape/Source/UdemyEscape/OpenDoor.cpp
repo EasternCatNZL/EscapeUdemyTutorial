@@ -36,37 +36,11 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	//if actor that can activate pressure plate steps into collision
 
 	if (GetTotalMassOfActorsOnPlate() > weightNeeded) {
-		OpenTheDoor();
+		onOpenRequest.Broadcast();
 	}
-
-	//if (pressurePlate->IsOverlappingActor(actorThatOpens)) {
-	//	OpenTheDoor();
-	//	lastDoorOpenTime = GetWorld()->GetTimeSeconds();
-	//}
-	////check if time to close door
-	//if (lastDoorOpenTime + doorCloseDelay <= GetWorld()->GetTimeSeconds()) {
-	//	CloseTheDoor();
-	//}
-}
-
-void UOpenDoor::OpenTheDoor()
-{
-	//set the door rotation
-	if (!owner) {
-		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
-		return;
+	else {
+		onCloseRequest.Broadcast();
 	}
-	onOpenRequest.Broadcast();
-	//owner->SetActorRotation(FRotator(0.0f, openAngle, 0.0f));
-}
-
-void UOpenDoor::CloseTheDoor() {
-	//set the door rotation
-	if (!owner) {
-		UE_LOG(LogTemp, Warning, TEXT("Owner not set"));
-		return;
-	}
-	//owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
 }
 
 float UOpenDoor::GetTotalMassOfActorsOnPlate() {
